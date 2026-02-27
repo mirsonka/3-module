@@ -1,0 +1,73 @@
+body{
+    margin: 0;
+    background-color: #c4e7d5;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.screen-1{
+    width: 100%;
+    height: 65.1vw;
+    background: #040605;
+    position: relative;
+}
+
+.stars{
+  position: absolute;
+  width: 100%;
+  height: 65%;
+  z-index: 1;
+  display: block;
+  object-fit: fill; 
+}
+
+.star-1{
+    position:absolute;
+    width: 22%;
+    left: -8%;
+    z-index: 1;
+}
+
+.pink-clouds{
+  position: absolute;
+  bottom: 20%;
+  width: 100%;
+  height: 60%;
+  z-index: 2;
+}
+
+.floor{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 25%;
+  z-index: 4;
+}
+
+
+.star-2{
+    position:absolute;
+    width: 22%;
+    right: -8%;
+    z-index: 1;
+    height: 48%;
+}
+
+.character{
+    position:absolute;
+    left: 18%;
+    bottom:24.55%; 
+    z-index: 6;
+}
+
+h1{
+    position: absolute;
+    left: 33%;
+    bottom: 68%; 
+    font-family: LEPKA;
+    font-size: 14vw;
+    color: transparent;
+    -webkit-text-stroke: 0.4vw #F1F3F2;
+}
