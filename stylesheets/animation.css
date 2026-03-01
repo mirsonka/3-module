@@ -1,0 +1,23 @@
+@keyframes mushroom {
+  0% {
+    left: 110%;
+  }
+  100% {
+    left: -20%;
+  }
+}
+
+@keyframes jump {
+  0% {
+    top: 35.8vw;
+  }
+  30% {
+    top: 20vw;
+  }
+  70% {
+    top: 20vw;
+  }
+  100% {
+    top: 35.8vw;
+  }
+}
