@@ -21,3 +21,15 @@
     top: 35.8vw;
   }
 }
+
+@keyframes clouds {
+  0% {
+    transform: translateX(-17%);
+  }
+  33% {
+    transform: translateX(-100%);
+  }
+  66% {
+    
+  }
+}
