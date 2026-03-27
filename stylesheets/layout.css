@@ -29,22 +29,29 @@ body {
   z-index: 1;
 }
 
-.pink-clouds {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 20%;
-  width: 160%;
+.clouds {
   animation: cloudsMove 2s linear infinite;
+  display: flex;
+  width: 100%;
+  position: absolute;
+  top: 61%;
+  gap: 10%;
+}
+
+.pink-clouds {
+  position: relative;
+  /* left: 50%; */
+  bottom: 20%;
+  width: 115%;
 }
 
 @keyframes cloudsMove {
   from {
-    transform: translateX(-50%) translateX(0);
+    transform: translateX(0);
   }
 
   to {
-    transform: translateX(-50%) translateX(-50%);
+    transform: translateX(-62%);
   }
 }
 
@@ -104,8 +111,8 @@ h1 {
     transform: translateY(0);
   }
 
-  40% {
-    transform: translateY(-16vw);
+  38% {
+    transform: translateY(-14vw);
   }
 
   100% {
