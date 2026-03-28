@@ -1,8 +1,6 @@
 body {
   margin: 0;
   background-color: #c4e7d5;
-  display: flex;
-  justify-content: center;
   overflow-x: hidden;
 }
 
@@ -83,16 +81,6 @@ h1 {
   -webkit-text-stroke: 0.4vw #f1f3f2;
 }
 
-/* .character {
-  position: absolute;
-  left: 18%;
-  bottom: 24.55%;
-  z-index: 6;
-}
-.animate {
-  animation: jump 600ms;
-} */
-
 #character {
   position: absolute;
   left: 18%;
@@ -127,4 +115,101 @@ h1 {
   bottom: 24.55%;
   z-index: 6;
   animation: mushroom 2.5s infinite linear;
+}
+
+.screen-2 {
+  width: 100%;
+  height: 70.2vw;
+  background: #ff80ab;
+  position: relative;
+}
+
+.screen-3 {
+  width: 100%;
+  height: 60.8vw;
+  background: #000000;
+  position: relative;
+}
+
+.labirint {
+  position: absolute;
+  width: 42.5vw;
+  right: 6%;
+  top: 18%;
+}
+
+.cat {
+  position: absolute;
+  width: 26.7vw;
+  left: 20%;
+  bottom: 0;
+  z-index: 6;
+}
+
+.disco {
+  position: absolute;
+  width: 11vw;
+  left: 34%;
+  top: 0;
+  z-index: 4;
+}
+
+.card {
+  position: absolute;
+  width: 38.1vw;
+  height: 24.9vw;
+  left: 4.6%;
+  top: 18%;
+  background: #fcfcfd;
+  border-radius: 2vw;
+  padding: 2.5vw 2.5vw 2.5vw 2.5vw;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+.card h2 {
+  margin: 0 0 1.6vw 0;
+
+  font-family: 'Lepka';
+  font-size: 3.5vw;
+  line-height: 1;
+
+  color: #feabc8;
+  -webkit-text-stroke: 0.17vw #000000;
+}
+
+.card ol {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+  counter-reset: item;
+
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.75vw;
+  line-height: 1.4vw;
+}
+
+.card ol li {
+  position: relative;
+  padding-left: 2.8vw;
+  margin-bottom: 1.3vw;
+}
+
+.card ol li::before {
+  content: counter(item) '.';
+  counter-increment: item;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  font-family: 'Lepka';
+  font-size: 1.9vw;
+  line-height: 1;
+
+  color: #feabc8;
+  -webkit-text-stroke: 0.12vw #000000;
 }
