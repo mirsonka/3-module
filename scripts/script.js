@@ -45,6 +45,208 @@ const speedUpMushroom = () => {
 
 mushroom.addEventListener('animationiteration', speedUpMushroom)
 
+window.addEventListener('load', () => {
+  const clowCover = document.getElementById('claw-machine-img')
+
+  const clawCanvas = document.getElementById('claw-game')
+  const ctx = clawCanvas.getContext('2d')
+
+  const baseCanvasWidth = 425
+  const baseCanvasHeight = 520
+  const baseClawCoverWidth = 650
+  const baseTopIndent = 70
+  const baseGrabDepth = 100
+
+  const isMobile = window.innerWidth <= 768
+  const resizeCoeff = isMobile ? 0.5 : 1
+
+  clowCover.width = baseClawCoverWidth * resizeCoeff
+
+  clawCanvas.width = baseCanvasWidth * resizeCoeff
+  clawCanvas.height = baseCanvasHeight * resizeCoeff
+  clawCanvas.style.top = baseTopIndent * resizeCoeff + 'px'
+
+  class Sprite {
+    constructor(position, imageSrc) {
+      this.grabDepth = baseGrabDepth * resizeCoeff
+      this.position = {}
+      this.position.x = position.x * resizeCoeff
+      this.position.y = position.y * resizeCoeff
+
+      this.originalY = this.position.y
+
+      this.image = new Image()
+      this.image.src = imageSrc
+      this.loaded = false
+      this.image.onload = () => (this.loaded = true)
+
+      this.state = 'IDLE'
+    }
+
+    render() {
+      if (this.loaded)
+        ctx.drawImage(
+          this.image,
+          this.position.x,
+          this.position.y,
+          this.image.width * resizeCoeff,
+          this.image.height * resizeCoeff,
+        )
+    }
+
+    update() {
+      switch (this.state) {
+        case 'IDLE':
+          break
+        case 'DESCENDING':
+          this.position.y += 2 * resizeCoeff
+
+          if (this.position.y >= this.originalY + this.grabDepth) {
+            this.state = 'GRABBING'
+            this.grabTimer = 50
+          }
+          break
+        case 'GRABBING':
+          const justGrabbedObject = this.anythingToBeGrabbed()
+          if (!this.grabbedObject && justGrabbedObject) {
+            this.grabbedObject = justGrabbedObject
+          }
+
+          this.grabTimer--
+
+          if (this.grabTimer <= 0) {
+            this.state = 'ASCENDING'
+          }
+          break
+        case 'ASCENDING':
+          this.position.y -= 2 * resizeCoeff
+
+          if (this.grabbedObject) {
+            this.grabbedObject.position.y -= 2 * resizeCoeff
+          }
+
+          if (this.position.y <= this.originalY) {
+            this.position.y = this.originalY
+
+            if (this.grabbedObject) {
+              this.state = 'WITHDRAW'
+            } else {
+              this.state = 'IDLE'
+            }
+          }
+          break
+        case 'WITHDRAW':
+          if (this.position.x > 0) {
+            this.position.x -= 2 * resizeCoeff
+            this.grabbedObject.position.x -= 2 * resizeCoeff
+          } else {
+            this.state = 'DROP'
+          }
+          break
+        case 'DROP':
+          if (this.grabbedObject.position.y < clawCanvas.height) {
+            this.grabbedObject.position.y += 4 * resizeCoeff
+          } else {
+            this.state = 'IDLE'
+            this.grabbedObject = null
+            if (!isMobile) {
+              const clawPrize = document.querySelector('.claw-prize')
+              clawPrize.classList.add('show')
+            }
+          }
+          break
+      }
+
+      this.render()
+    }
+
+    anythingToBeGrabbed() {
+      const clawCenterX = this.position.x + this.image.width / 2
+      for (const obj of grabbableObjects) {
+        const objCenterX = obj.position.x + obj.image.width / 2
+        if (
+          clawCenterX > objCenterX - 15 * resizeCoeff &&
+          clawCenterX < objCenterX + 15 * resizeCoeff
+        ) {
+          return obj
+        }
+      }
+      return null
+    }
+
+    moveRight() {
+      this.position.x += 2 * resizeCoeff
+    }
+
+    moveLeft() {
+      this.position.x -= 2 * resizeCoeff
+    }
+
+    startGrab() {
+      if (this.state !== 'IDLE') return
+
+      this.state = 'DESCENDING'
+    }
+  }
+
+  const claw = new Sprite({ x: 0, y: 0 }, './images/claw.svg')
+  const cat1 = new Sprite({ x: 120, y: 395 }, './images/cat-1.svg')
+  const cat2 = new Sprite({ x: 265, y: 360 }, './images/cat-2.svg')
+  const bgContent = new Sprite(
+    { x: -7, y: 417 },
+    './images/claw-background-content.svg',
+  )
+  const bgContentTopLayer = new Sprite(
+    { x: 205, y: 450 },
+    './images/claw-background-content-top-layer.svg',
+  )
+
+  const grabbableObjects = [cat1, cat2]
+
+  const keysPressed = new Set()
+
+  window.addEventListener('keydown', (e) => {
+    e.preventDefault()
+    keysPressed.add(e.code)
+  })
+
+  window.addEventListener('keyup', (e) => {
+    keysPressed.delete(e.code)
+  })
+
+  const updateMovement = () => {
+    if (claw.state === 'IDLE') {
+      if (
+        keysPressed.has('ArrowRight') &&
+        claw.position.x + claw.image.width * resizeCoeff <= clawCanvas.width
+      ) {
+        claw.moveRight()
+      } else if (keysPressed.has('ArrowLeft') && claw.position.x >= 0) {
+        claw.moveLeft()
+      }
+    }
+
+    if (keysPressed.has('Space')) {
+      claw.startGrab()
+    }
+  }
+  const animate = () => {
+    requestAnimationFrame(animate)
+
+    ctx.clearRect(0, 0, clawCanvas.width, clawCanvas.height)
+
+    updateMovement()
+
+    bgContent.update()
+    cat1.update()
+    cat2.update()
+    bgContentTopLayer.update()
+    claw.update()
+  }
+
+  animate()
+})
+
 const map = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 2, 3, 2, 2, 2, 1, 1, 1, 1, 2, 1, 1],

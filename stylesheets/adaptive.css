@@ -438,4 +438,19 @@
   .last-star3 {
     display: none;
   }
+
+  .claw-inner {
+    display: none;
+  }
+
+  .claw-machine-container {
+    left: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #claw-game {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
