@@ -8,28 +8,20 @@
 }
 
 @keyframes jump {
-  0% {
-    top: 35.8vw;
-  }
-  30% {
-    top: 20vw;
-  }
-  70% {
-    top: 20vw;
-  }
+  0%,
   100% {
-    top: 35.8vw;
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20vw);
   }
 }
 
 @keyframes clouds {
   0% {
-    transform: translateX(-17%);
+    transform: translateX(110%);
   }
-  33% {
+  100% {
     transform: translateX(-100%);
-  }
-  66% {
-    
   }
 }

@@ -1,4 +1,4 @@
-@media (max-width: 1024px) and (orientation: portrait) {
+@media (max-width: 1024px) {
   .screen-3 {
     width: 100%;
     height: 140vw;
@@ -114,7 +114,7 @@
   }
 }
 
-@media (max-width: 1024px) and (orientation: portrait) {
+@media (max-width: 1024px) {
   .screen-4 {
     width: 100%;
     height: 170vw;
@@ -213,7 +213,7 @@
   }
 }
 
-@media (max-width: 1024px) and (orientation: portrait) {
+@media (max-width: 1024px) {
   .screen-1 {
     width: 100%;
     height: 146vw;
@@ -248,6 +248,10 @@
     z-index: 2;
   }
 
+  .clouds {
+    bottom: 25%;
+  }
+
   h1 {
     position: absolute;
     left: 50%;
@@ -259,17 +263,6 @@
     line-height: 1;
     color: transparent;
     -webkit-text-stroke: 0.5vw #f1f3f2;
-    z-index: 3;
-  }
-
-  .clouds {
-    animation: cloudsMoveTablet 2s linear infinite;
-    display: flex;
-    width: 180%;
-    position: absolute;
-    top: 63%;
-    left: 0;
-    gap: 0;
     z-index: 3;
   }
 
@@ -305,7 +298,7 @@
     left: 18%;
     bottom: 28%;
     z-index: 6;
-    width: 19vw;
+    width: 16vw;
     display: block;
   }
 
@@ -336,7 +329,25 @@
   }
 }
 
-@media (max-width: 1024px) and (orientation: portrait) {
+@media (max-width: 1200px) {
+  .claw-inner {
+    display: none;
+  }
+
+  .claw-machine-container {
+    left: 0;
+  }
+
+  .card-2 {
+    display: none;
+  }
+
+  .cat-strip {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
   .screen-5 {
     width: 100%;
     height: 82vw;
@@ -361,6 +372,19 @@
     z-index: 5;
     pointer-events: none;
     will-change: transform;
+  }
+}
+
+@media (max-width: 500px) {
+  .pupils {
+    position: absolute;
+    left: 45%;
+    top: 37.8%;
+    width: 16vw;
+    z-index: 5;
+    pointer-events: none;
+    will-change: auto;
+    transform: none !important;
   }
 
   @keyframes fishSwimLoopTablet {
@@ -437,14 +461,6 @@
 
   .last-star3 {
     display: none;
-  }
-
-  .claw-inner {
-    display: none;
-  }
-
-  .claw-machine-container {
-    left: 0;
   }
 }
 

@@ -1,19 +1,53 @@
 const character = document.getElementById('character')
 const mushroom = document.getElementById('mushroom')
+const clouds1 = document.getElementById('clouds-1')
+const clouds2 = document.getElementById('clouds-2')
+const closeIcon1 = document.getElementById('close-icon-1')
+const guideCard = document.getElementById('guide-card')
+const question1 = document.getElementById('question-1')
+const inviteCard1 = document.getElementById('invite-card-1')
 
-function jump() {
-  if (!character) return
+let questionCardOpened = false
 
-  if (character.classList.contains('animate')) return
-  character.classList.add('animate')
-  setTimeout(() => character.classList.remove('animate'), 850)
-}
+guideCard.addEventListener('click', (e) => {
+  e.stopPropagation()
+})
+
+inviteCard1.addEventListener('click', (e) => {
+  e.stopPropagation()
+})
+
+question1.addEventListener('click', (e) => {
+  e.preventDefault()
+  e.stopPropagation()
+  if (questionCardOpened) {
+    guideCard.style.display = 'none'
+    restartGame()
+  } else {
+    guideCard.style.display = 'block'
+    gameOver = true
+    clouds1Anim.pause()
+    clouds2Anim.pause()
+    mushroomAnim.pause()
+  }
+
+  questionCardOpened = !questionCardOpened
+})
+
+closeIcon1.addEventListener('click', (e) => {
+  e.stopPropagation()
+  inviteCard1.style.display = 'none'
+})
 
 window.addEventListener('click', jump)
 window.addEventListener('keydown', (e) => {
   if (e.code === 'Space') {
     e.preventDefault()
-    jump()
+    if (gameOver) {
+      restartGame()
+    } else {
+      jump()
+    }
   }
 })
 
@@ -24,13 +58,28 @@ const mushroomAnim =
   mushroom.getAnimations().find((a) => a.animationName === 'mushroom') ||
   mushroom.getAnimations()[0]
 
-console.log(mushroom.getAnimations())
+const clouds1Anim = clouds1.getAnimations()[0]
+const clouds2Anim = clouds2.getAnimations()[0]
 
 let mushroomRate = 1
 
+function jump() {
+  if (!character) return
+
+  if (character.classList.contains('animate')) return
+  character.classList.add('animate')
+
+  const handleAnimationEnd = () => {
+    character.classList.remove('animate')
+    character.removeEventListener('animationend', handleAnimationEnd)
+  }
+
+  character.addEventListener('animationend', handleAnimationEnd)
+}
+
 const speedUpMushroom = () => {
   if (mushroomRate > 2) {
-    window.removeEventListener('animationiteration', speedUpMushroom)
+    mushroom.removeEventListener('animationiteration', speedUpMushroom)
     return
   }
   mushroomIterations++
@@ -45,6 +94,58 @@ const speedUpMushroom = () => {
 
 mushroom.addEventListener('animationiteration', speedUpMushroom)
 
+let gameOver = false
+
+function checkCollision() {
+  if (gameOver) return
+
+  const charRect = character.getBoundingClientRect()
+  const mushRect = mushroom.getBoundingClientRect()
+
+  const charReachedMushroom = charRect.right > mushRect.left + 10
+
+  const isColliding =
+    charReachedMushroom &&
+    charRect.left < mushRect.right &&
+    charRect.right > mushRect.left &&
+    charRect.top < mushRect.bottom &&
+    charRect.bottom > mushRect.top
+
+  if (isColliding) {
+    gameOver = true
+    clouds1Anim.pause()
+    clouds2Anim.pause()
+    mushroomAnim.pause()
+    inviteCard1.style.display = 'block'
+    return
+  }
+
+  requestAnimationFrame(checkCollision)
+}
+
+requestAnimationFrame(checkCollision)
+
+function restartGame() {
+  gameOver = false
+  inviteCard1.style.display = 'none'
+
+  mushroomRate = 1
+  mushroomIterations = 0
+  characterAnimationDuration = 1.1
+  mushroomAnim.updatePlaybackRate(mushroomRate)
+
+  mushroom.addEventListener('animationiteration', speedUpMushroom)
+
+  mushroomAnim.currentTime = 0
+
+  clouds1Anim.play()
+  clouds2Anim.play()
+  mushroomAnim.play()
+
+  requestAnimationFrame(checkCollision)
+}
+
+// screen-2
 window.addEventListener('load', () => {
   const clowCover = document.getElementById('claw-machine-img')
 
@@ -247,6 +348,8 @@ window.addEventListener('load', () => {
   animate()
 })
 
+// screen-3
+
 const map = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   [1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 2, 3, 2, 2, 2, 1, 1, 1, 1, 2, 1, 1],
@@ -295,9 +398,7 @@ const cookiesObjects = Array.from(cookies).map((cookie, i) => {
   }
 })
 
-window.addEventListener('resize', (e) => {})
-
-window.addEventListener('load', (event) => {
+window.addEventListener('load', () => {
   const labirint = document.getElementById('labirint')
   const cellWidth = labirint.clientWidth / 22
   const cellHeight = labirint.clientHeight / 21
@@ -332,9 +433,10 @@ window.addEventListener('load', (event) => {
     e.preventDefault()
 
     if (e.key === 'ArrowLeft') newX--
-    if (e.key === 'ArrowRight') newX++
-    if (e.key === 'ArrowUp') newY--
-    if (e.key === 'ArrowDown') newY++
+    else if (e.key === 'ArrowRight') newX++
+    else if (e.key === 'ArrowUp') newY--
+    else if (e.key === 'ArrowDown') newY++
+    else return
 
     if (newY >= 0 && newY < map.length && newX >= 0 && newX < map[0].length) {
       if (map[newY][newX] !== 1) {
@@ -349,11 +451,24 @@ window.addEventListener('load', (event) => {
     }
 
     if (map[newY][newX] === 4)
-      confetti({
-        size: 3,
-      })
+      for (let x = 0; x < window.innerWidth; x += 250) {
+        for (let y = 0; y < window.innerHeight; y += 250) {
+          const randomX = Math.random() * 150 - 75
+          const randomY = Math.random() * 150 - 75
+
+          confetti({
+            position: {
+              x: x + randomX,
+              y: y + randomY,
+            },
+            size: 3,
+          })
+        }
+      }
   })
 })
+
+// screen-4
 
 const cards = document.querySelectorAll('.game-card')
 const cardsRow = document.querySelector('.cards-row')
@@ -401,8 +516,8 @@ function handleCardsClick(e) {
     if (clickedCard === tamaraCard) {
       for (let x = 0; x < window.innerWidth; x += 250) {
         for (let y = 0; y < window.innerHeight; y += 250) {
-          const randomX = Math.random() * 90 - 45
-          const randomY = Math.random() * 90 - 45
+          const randomX = Math.random() * 150 - 75
+          const randomY = Math.random() * 150 - 75
 
           confetti({
             position: {
@@ -476,6 +591,8 @@ function animatedShuffle() {
     })
   })
 }
+
+// screen-5
 
 const fish = document.querySelector('.last-fish')
 const pupils = document.querySelector('.pupils')
