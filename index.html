@@ -5,36 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3-module</title>
     <link rel="stylesheet" href="stylesheets/style.css" />
-    <script src="scripts/script.js" defer></script>
   </head>
   <body>
     <div class="screen-1">
-      <img src="images/stars.svg" class="stars" />
-      <img src="images/star-1.svg" class="star-1" />
-      <img src="images/star-2.svg" class="star-2" />
-      <div class="clouds">
-        <img src="images/pink-clouds.svg" class="pink-clouds" />
-        <img src="images/pink-clouds.svg" class="pink-clouds" />
-        <img src="images/pink-clouds.svg" class="pink-clouds" />
-        <img src="images/pink-clouds.svg" class="pink-clouds" />
-      </div>
-
+      <img src="images/stars.svg" class="stars" alt="" />
+      <img src="images/star-1.svg" class="star-1" alt="" />
       <img id="character" src="images/character.svg" alt="" />
-
-      <!-- </div> -->
-      <img src="images/floor.svg" class="floor" />
-      <img id="mushroom" src="images/mushroom.svg" class="mushroom" />
+      <img src="images/floor.svg" class="floor" alt="" />
+      <img id="mushroom" src="images/mushroom.svg" class="mushroom" alt="" />
       <h1>MURR</h1>
     </div>
 
     <div class="screen-2"></div>
 
     <div class="screen-3">
-      <img src="images/disco_ball.svg" class="disco" />
+      <img src="images/disco_ball.svg" class="disco" alt="" />
 
       <div class="card">
         <h2>ПРОЙДИ ЛАБИРИНТ</h2>
-        <ol>
+
+        <ol class="rules-desktop">
           <li>
             Используй стрелочки чтобы <br />
             вести кота по дорожке
@@ -42,10 +32,104 @@
           <li>Собери весь корм по пути</li>
           <li>Дойди до выхода!</li>
         </ol>
+        <ol class="rules-tablet">
+          <li>Собери весь корм по пути</li>
+          <li>Дойди до выхода!</li>
+        </ol>
       </div>
 
-      <img src="images/labirint.svg" class="labirint" />
-      <img src="images/cat.svg" class="cat" />
+      <div class="content-labirint">
+        <img src="images/pink_cat.svg" class="pink-cat" alt="" />
+        <img src="images/labirint.svg" id="labirint" alt="" />
+        <img src="images/cookies.svg" id="cookie1" class="cookies" alt="" />
+        <img src="images/cookies.svg" id="cookie2" class="cookies" alt="" />
+        <img src="images/cookies.svg" id="cookie3" class="cookies" alt="" />
+        <img src="images/cookies.svg" id="cookie4" class="cookies" alt="" />
+        <img src="images/cookies.svg" id="cookie5" class="cookies" alt="" />
+        <img src="images/cookies.svg" id="cookie6" class="cookies" alt="" />
+        <img src="images/cookies.svg" id="cookie7" class="cookies" alt="" />
+        <img src="images/cookies.svg" id="cookie8" class="cookies" alt="" />
+        <img src="images/cookies.svg" id="cookie9" class="cookies" alt="" />
+        <img src="images/cookies.svg" id="cookie10" class="cookies" alt="" />
+      </div>
+      <img src="images/cat.svg" class="cat" alt="" />
     </div>
+
+    <div class="screen-4">
+      <div class="title-box">
+        <h2>НАЙДИ КАРТОЧКУ С РЫБКОЙ!</h2>
+      </div>
+
+      <img src="images/stars-screen4.svg" class="stars-4" alt="" />
+
+      <div class="cards-row">
+        <div class="game-card" id="tamara">
+          <div class="game-card-inner">
+            <div class="game-card-front">
+              <img
+                class="card-face"
+                src="images/tamara.svg"
+                alt="Рыба Тамара"
+              />
+            </div>
+            <div class="game-card-back">
+              <img class="card-back-image" src="images/back.svg" alt="" />
+            </div>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <div class="game-card-inner">
+            <div class="game-card-front">
+              <img class="card-face" src="images/zuza.svg" alt="Кот Зюзя" />
+            </div>
+            <div class="game-card-back">
+              <img class="card-back-image" src="images/back.svg" alt="" />
+            </div>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <div class="game-card-inner">
+            <div class="game-card-front">
+              <img class="card-face" src="images/Musa.svg" alt="Кошка Муся" />
+            </div>
+            <div class="game-card-back">
+              <img class="card-back-image" src="images/back.svg" alt="" />
+            </div>
+          </div>
+        </div>
+
+        <div class="game-card">
+          <div class="game-card-inner">
+            <div class="game-card-front">
+              <img class="card-face" src="images/Gena.svg" alt="Кот Гена" />
+            </div>
+            <div class="game-card-back">
+              <img class="card-back-image" src="images/back.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen-5">
+      <img src="images/last-paw.svg" class="last-paw" alt="" />
+      <img src="images/last-cat.svg" class="last-cat" alt="" />
+      <img src="images/last-fish.svg" class="last-fish" alt="" />
+      <img src="images/pupils.svg" class="pupils" alt="" />
+      <img src="images/last-star.svg" class="last-star" alt="" />
+      <img src="images/last-star.svg" class="last-star2" alt="" />
+      <img src="images/more-last-star.svg" class="last-star3" alt="" />
+
+      <div class="final-card">
+        <h2 class="bright final-name">МЕШАВКИНА АЛИНА</h2>
+        <h2 class="bright final-module">МОДУЛЬ 3</h2>
+        <h2 class="bright final-code">Б25ДЗ10</h2>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@hiseb/confetti@2.1.0/dist/confetti.min.js"></script>
+    <script src="scripts/script.js"></script>
   </body>
 </html>
